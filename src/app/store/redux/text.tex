@@ -1,0 +1,52 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+// Mock API call (replace with your actual API, e.g., /api/messages)
+export const fetchMessages = createAsyncThunk("messages/fetchMessages", async () => {
+  const response = await fetch("/api/messages");
+  if (!response.ok) throw new Error("Failed to fetch messages");
+  return await response.json();
+});
+
+export const sendMessage = createAsyncThunk("messages/sendMessage", async (message) => {
+  const response = await fetch("/api/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(message),
+  });
+  if (!response.ok) throw new Error("Failed to send message");
+  return await response.json();
+});
+
+const messagesSlice = createSlice({
+  name: "messages",
+  initialState: {
+    messages: [],
+    status: "idle",
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchMessages.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchMessages.fulfilled, (state, action) => {
+        state.messages = action.payload;
+        state.status = "succeeded";
+      })
+      .addCase(fetchMessages.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(sendMessage.fulfilled, (state, action) => {
+        state.messages.push(action.payload);
+        state.status = "succeeded";
+      })
+      .addCase(sendMessage.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
+});
+
+export default messagesSlice.reducer;

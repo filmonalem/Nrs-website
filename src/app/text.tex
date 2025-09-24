@@ -1,0 +1,620 @@
+// "use client";
+// import Link from "next/link";
+// import { useState, useEffect, useRef } from "react";
+
+// export default function Home() {
+//   const [activeSection, setActiveSection] = useState("hero");
+//   const [galleryIndex, setGalleryIndex] = useState(0);
+//   const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
+//   const [activeCategory, setActiveCategory] = useState("all");
+
+//   // Your provided images
+//   const galleryImages = [
+//     { id: 1, title: "School Campus", category: "campus", src: "/images/image2.avif" },
+//     { id: 2, title: "Science Lab", category: "facilities", src: "/images/IMG_9128_JPG.avif" },
+//     { id: 3, title: "Sports Day", category: "events", src: "/images/IMG_4713_JPG.avif" },
+//     { id: 4, title: "Art Exhibition", category: "achievements", src: "/images/IMG_6450_JPG.avif" },
+//     { id: 5, title: "Library", category: "facilities", src: "/images/IMG_6821_JPG.avif" },
+//     { id: 6, title: "Graduation", category: "events", src: "/images/IMG_7320_JPG.avif" },
+//     { id: 7, title: "Computer Lab", category: "facilities", src: "/images/Snapchat-3.jpg" },
+//     { id: 8, title: "Music Class", category: "activities", src: "/images/Snapchat-4.jpg" },
+//     { id: 9, title: "Student Activities", category: "activities", src: "/images/Snapchat-5.jpg" },
+//   ];
+
+//   // Filter images based on selected category
+//   const filteredImages = activeCategory === "all" 
+//     ? galleryImages 
+//     : galleryImages.filter(img => img.category === activeCategory);
+
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       const sections = document.querySelectorAll("section");
+//       let currentSection = "hero";
+      
+//       sections.forEach(section => {
+//         const sectionTop = section.offsetTop;
+//         const sectionHeight = section.clientHeight;
+//         if (window.scrollY >= sectionTop - sectionHeight / 3) {
+//           currentSection = section.id;
+//         }
+//       });
+      
+//       setActiveSection(currentSection);
+//     };
+
+//     window.addEventListener("scroll", handleScroll);
+//     return () => window.removeEventListener("scroll", handleScroll);
+//   }, []);
+
+//   const nextGalleryImage = () => {
+//     setGalleryIndex((prevIndex) => 
+//       prevIndex === filteredImages.length - 1 ? 0 : prevIndex + 1
+//     );
+//   };
+
+//   const prevGalleryImage = () => {
+//     setGalleryIndex((prevIndex) => 
+//       prevIndex === 0 ? filteredImages.length - 1 : prevIndex - 1
+//     );
+//   };
+
+//   const openGalleryModal = (index) => {
+//     setGalleryIndex(index);
+//     setIsGalleryModalOpen(true);
+//   };
+
+//   const selectCategory = (category) => {
+//     setActiveCategory(category);
+//     setGalleryIndex(0);
+//   };
+
+//   return (
+//     <div className="homepage-container">
+//       <Navbar activeSection={activeSection} />
+      
+//       {/* Hero Section */}
+//       <section id="hero" className="h-screen flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-700 text-white relative overflow-hidden">
+//         <div className="absolute inset-0 z-0">
+//           <div 
+//             className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
+//             style={{ backgroundImage: "url('/images/image2.avif')" }}
+//           >
+//             <div className="absolute inset-0 bg-black opacity-40"></div>
+//           </div>
+//           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60"></div>
+//         </div>
+        
+//         <div className="text-center z-10 animate-fade-in-up px-4">
+//           <h1 className="text-5xl md:text-7xl font-bold mb-6">Welcome to Our School</h1>
+//           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+//             Empowering students to excel academically, socially, and personally in a nurturing environment.
+//           </p>
+//           <div className="space-x-4">
+//             <button className="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold text-lg hover:bg-gray-100 transition transform hover:scale-105">
+//               Apply Now
+//             </button>
+//             <button className="border-2 border-white text-white px-6 py-3 rounded-full font-semibold text-lg hover:bg-white hover:text-blue-600 transition transform hover:scale-105">
+//               Learn More
+//             </button>
+//           </div>
+//         </div>
+//         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
+//           <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+//           </svg>
+//         </div>
+//       </section>
+
+      // {/* About Section */}
+      // <section id="about" className="min-h-screen py-20 px-4 bg-gray-50">
+      //   <div className="max-w-6xl mx-auto">
+      //     <h2 className="text-4xl font-bold text-center mb-16 text-gray-800 animate-fade-in">About Our School</h2>
+      //     <div className="grid md:grid-cols-2 gap-12 items-center">
+      //       <div className="animate-fade-in-left">
+      //         <h3 className="text-2xl font-semibold mb-6 text-blue-600">Our History</h3>
+      //         <p className="text-lg text-gray-700 mb-6">
+      //           Founded in 1995, Our School has been providing quality education for over 25 years. 
+      //           We've grown from a small community school to a renowned institution recognized for academic excellence.
+      //         </p>
+      //         <p className="text-lg text-gray-700">
+      //           Our dedicated faculty and staff work tirelessly to create an environment where students 
+      //           can discover their passions and develop the skills needed for success in college and beyond.
+      //         </p>
+      //       </div>
+      //       <div className="rounded-lg overflow-hidden shadow-xl animate-fade-in-right">
+      //         <div 
+      //           className="h-80 bg-cover bg-center flex items-center justify-center"
+      //           style={{ backgroundImage: "url('/images/IMG_9128_JPG.avif')" }}
+      //         >
+      //           <div className="bg-black bg-opacity-40 text-white p-4 rounded">
+      //             <span className="text-xl font-bold">Modern Science Lab</span>
+      //           </div>
+      //         </div>
+      //       </div>
+      //     </div>
+      //   </div>
+      // </section>
+
+//       {/* Gallery Section */}
+//       <section id="gallery" className="min-h-screen py-20 px-4 bg-white">
+//         <div className="max-w-6xl mx-auto">
+//           <h2 className="text-4xl font-bold text-center mb-16 text-gray-800">Our Gallery</h2>
+          
+//           {/* Gallery Navigation */}
+//           <div className="flex flex-wrap justify-center mb-12 animate-fade-in gap-2">
+//             {['all', 'campus', 'facilities', 'events', 'achievements', 'activities'].map(category => (
+//               <button
+//                 key={category}
+//                 className={`px-4 py-2 text-sm font-medium rounded-md ${
+//                   activeCategory === category 
+//                     ? 'bg-blue-600 text-white' 
+//                     : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+//                 }`}
+//                 onClick={() => selectCategory(category)}
+//               >
+//                 {category.charAt(0).toUpperCase() + category.slice(1)}
+//               </button>
+//             ))}
+//           </div>
+          
+//           {/* Gallery Grid */}
+//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in-up">
+//             {filteredImages.map((image, index) => (
+//               <div 
+//                 key={image.id} 
+//                 className="relative group overflow-hidden rounded-lg cursor-pointer transform transition duration-300 hover:scale-105"
+//                 onClick={() => openGalleryModal(index)}
+//               >
+//                 <div 
+//                   className="h-64 bg-cover bg-center flex items-end"
+//                   style={{ backgroundImage: `url(${image.src})` }}
+//                 >
+//                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
+//                     <div className="text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+//                       <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3-3H7"></path>
+//                       </svg>
+//                     </div>
+//                   </div>
+//                 </div>
+//                 <div className="absolute bottom-0 left-0 right-0 p-3 bg-black bg-opacity-60 text-white transform translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
+//                   <h3 className="font-semibold">{image.title}</h3>
+//                   <p className="text-sm text-gray-300">{image.category}</p>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+          
+//           <div className="text-center mt-12">
+//             <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105">
+//               View Full Gallery
+//             </button>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Gallery Modal */}
+//       {isGalleryModalOpen && (
+//         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4 animate-fade-in">
+//           <div className="relative max-w-4xl w-full bg-white rounded-lg overflow-hidden">
+//             <button 
+//               className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full p-2 z-10 hover:bg-opacity-70 transition"
+//               onClick={() => setIsGalleryModalOpen(false)}
+//             >
+//               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+//               </svg>
+//             </button>
+            
+//             <button 
+//               className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full p-2 z-10 hover:bg-opacity-70 transition"
+//               onClick={prevGalleryImage}
+//             >
+//               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+//               </svg>
+//             </button>
+            
+//             <button 
+//               className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full p-2 z-10 hover:bg-opacity-70 transition"
+//               onClick={nextGalleryImage}
+//             >
+//               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+//               </svg>
+//             </button>
+            
+//             <div className="h-96 bg-cover bg-center" style={{ backgroundImage: `url(${filteredImages[galleryIndex].src})` }}></div>
+            
+//             <div className="p-6">
+//               <h3 className="text-xl font-semibold text-gray-800">{filteredImages[galleryIndex].title}</h3>
+//               <p className="text-gray-600">{filteredImages[galleryIndex].category}</p>
+//               <div className="mt-2 text-sm text-gray-500">
+//                 {galleryIndex + 1} of {filteredImages.length}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+
+//       {/* Services Section */}
+//       <section id="services" className="min-h-screen py-20 px-4 bg-gray-50">
+//         <div className="max-w-6xl mx-auto">
+//           <h2 className="text-4xl font-bold text-center mb-16 text-gray-800">Our Services</h2>
+//           <div className="grid md:grid-cols-3 gap-8">
+//             {[
+//               { title: "Academic Programs", desc: "Comprehensive curriculum from elementary to high school with advanced placement options.", icon: "📚" },
+//               { title: "Extracurricular Activities", desc: "Sports, arts, clubs, and organizations to develop well-rounded individuals.", icon: "⚽" },
+//               { title: "Student Support", desc: "Counseling, tutoring, and special education services for all students.", icon: "🤝" },
+//               { title: "College Preparation", desc: "Guidance and resources to prepare students for higher education.", icon: "🎓" },
+//               { title: "Technology Integration", desc: "Modern technology integrated into all aspects of learning.", icon: "💻" },
+//               { title: "Community Engagement", desc: "Partnerships with local organizations for real-world learning experiences.", icon: "🌍" }
+//             ].map((service, index) => (
+//               <div 
+//                 key={index} 
+//                 className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-2 animate-fade-in-up"
+//                 style={{ animationDelay: `${index * 0.1}s` }}
+//               >
+//                 <div className="text-4xl mb-6">{service.icon}</div>
+//                 <h3 className="text-xl font-semibold mb-4 text-gray-800">{service.title}</h3>
+//                 <p className="text-gray-600">{service.desc}</p>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Mission Section */}
+//       <section id="mission" className="min-h-screen py-20 px-4 bg-gradient-to-br from-blue-600 to-purple-700 text-white">
+//         <div className="max-w-4xl mx-auto text-center">
+//           <h2 className="text-4xl font-bold mb-16">Our Mission & Vision</h2>
+          
+//           <div className="mb-16 animate-fade-in-left">
+//             <h3 className="text-2xl font-semibold mb-6">Mission</h3>
+//             <p className="text-xl">
+//               To provide a rigorous and inclusive educational experience that empowers students to become 
+//               critical thinkers, compassionate leaders, and engaged global citizens.
+//             </p>
+//           </div>
+          
+//           <div className="animate-fade-in-right">
+//             <h3 className="text-2xl font-semibold mb-6">Vision</h3>
+//             <p className="text-xl">
+//               We envision a learning community where every student achieves their highest potential, 
+//               embraces diversity, and contributes positively to an ever-changing world.
+//             </p>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* News Section */}
+//       <section id="news" className="min-h-screen py-20 px-4 bg-white">
+//         <div className="max-w-6xl mx-auto">
+//           <h2 className="text-4xl font-bold text-center mb-16 text-gray-800">Latest News</h2>
+//           <div className="grid md:grid-cols-3 gap-8">
+//             {[
+//               { title: "Annual Science Fair Winners", date: "Oct 15, 2023", image: "/images/IMG_4713_JPG.avif" },
+//               { title: "Basketball Team Wins Regional Championship", date: "Sep 28, 2023", image: "/images/IMG_6450_JPG.avif" },
+//               { title: "New STEM Lab Grand Opening", date: "Aug 10, 2023", image: "/images/IMG_6821_JPG.avif" }
+//             ].map((news, index) => (
+//               <div key={index} className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition transform hover:-translate-y-2">
+//                 <div 
+//                   className="h-48 bg-cover bg-center" 
+//                   style={{ backgroundImage: `url(${news.image})` }}
+//                 ></div>
+//                 <div className="p-6">
+//                   <span className="text-blue-600 text-sm">{news.date}</span>
+//                   <h3 className="text-xl font-semibold mt-2 mb-4 text-gray-800">{news.title}</h3>
+//                   <button className="text-blue-600 font-semibold hover:underline">Read More</button>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//           <div className="text-center mt-12">
+//             <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105">
+//               View All News
+//             </button>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* Contact Section */}
+//       <section id="contact" className="min-h-screen py-20 px-4 bg-gray-50">
+//         <div className="max-w-4xl mx-auto">
+//           <h2 className="text-4xl font-bold text-center mb-16 text-gray-800">Contact Us</h2>
+//           <div className="bg-white rounded-xl shadow-md p-8 md:p-12">
+//             <form className="space-y-6">
+//               <div className="grid md:grid-cols-2 gap-6">
+//                 <div>
+//                   <label className="block text-gray-700 mb-2" htmlFor="name">Full Name</label>
+//                   <input type="text" id="name" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+//                 </div>
+//                 <div>
+//                   <label className="block text-gray-700 mb-2" htmlFor="email">Email Address</label>
+//                   <input type="email" id="email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+//                 </div>
+//               </div>
+//               <div>
+//                 <label className="block text-gray-700 mb-2" htmlFor="subject">Subject</label>
+//                 <input type="text" id="subject" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+//               </div>
+//               <div>
+//                 <label className="block text-gray-700 mb-2" htmlFor="message">Message</label>
+//                 <textarea id="message" rows="5" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+//               </div>
+//               <button type="submit" className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold text-lg hover:bg-blue-700 transition transform hover:scale-105">
+//                 Send Message
+//               </button>
+//             </form>
+//           </div>
+//         </div>
+//       </section>
+
+//       <Footer />
+//     </div>
+//   );
+// }
+
+// // Navbar component with dropdowns
+// function Navbar({ activeSection }) {
+//   const [isMenuOpen, setIsMenuOpen] = useState(false);
+//   const [openDropdown, setOpenDropdown] = useState(null);
+
+//   const dropdownItems = {
+//     about: [
+//       { name: "History", href: "#history" },
+//       { name: "Leadership", href: "#leadership" },
+//       { name: "Faculty", href: "#faculty" },
+//       { name: "Testimonials", href: "#testimonials" }
+//     ],
+//     academics: [
+//       { name: "Curriculum", href: "#curriculum" },
+//       { name: "Departments", href: "#departments" },
+//       { name: "Programs", href: "#programs" },
+//       { name: "Academic Calendar", href: "#calendar" }
+//     ],
+//     admissions: [
+//       { name: "Apply Now", href: "#apply" },
+//       { name: "Requirements", href: "#requirements" },
+//       { name: "Tuition & Fees", href: "#tuition" },
+//       { name: "Scholarships", href: "#scholarships" }
+//     ]
+//   };
+
+//   const toggleDropdown = (dropdownName) => {
+//     if (openDropdown === dropdownName) {
+//       setOpenDropdown(null);
+//     } else {
+//       setOpenDropdown(dropdownName);
+//     }
+//   };
+
+//   return (
+//     <nav className="fixed top-0 w-full bg-blue-600 text-white p-4 shadow-lg z-50">
+//       <div className="max-w-6xl mx-auto flex justify-between items-center">
+//         <Link href="/" className="text-2xl font-bold">
+//           Our School
+//         </Link>
+        
+//         {/* Mobile menu button */}
+//         <button 
+//           className="md:hidden focus:outline-none"
+//           onClick={() => setIsMenuOpen(!isMenuOpen)}
+//         >
+//           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//             {isMenuOpen ? (
+//               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+//             ) : (
+//               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+//             )}
+//           </svg>
+//         </button>
+        
+//         {/* Desktop Navigation */}
+//         <div className="hidden md:flex space-x-6 items-center">
+//           <NavLink href="#hero" active={activeSection === "hero"}>Home</NavLink>
+          
+//           {/* About Dropdown */}
+//           <div className="relative">
+//             <button 
+//               onClick={() => toggleDropdown('about')}
+//               className="hover:underline flex items-center"
+//             >
+//               About <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+//               </svg>
+//             </button>
+            
+//             {openDropdown === 'about' && (
+//               <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50 animate-fade-in-up">
+//                 {dropdownItems.about.map((item, index) => (
+//                   <a 
+//                     key={index} 
+//                     href={item.href} 
+//                     className="block px-4 py-2 text-gray-800 hover:bg-blue-100 transition"
+//                   >
+//                     {item.name}
+//                   </a>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+          
+//           <NavLink href="#services" active={activeSection === "services"}>Services</NavLink>
+          
+//           {/* Academics Dropdown */}
+//           <div className="relative">
+//             <button 
+//               onClick={() => toggleDropdown('academics')}
+//               className="hover:underline flex items-center"
+//             >
+//               Academics <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+//               </svg>
+//             </button>
+            
+//             {openDropdown === 'academics' && (
+//               <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50 animate-fade-in-up">
+//                 {dropdownItems.academics.map((item, index) => (
+//                   <a 
+//                     key={index} 
+//                     href={item.href} 
+//                     className="block px-4 py-2 text-gray-800 hover:bg-blue-100 transition"
+//                   >
+//                     {item.name}
+//                   </a>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+          
+//           <NavLink href="#gallery" active={activeSection === "gallery"}>Gallery</NavLink>
+//           <NavLink href="#news" active={activeSection === "news"}>News</NavLink>
+          
+//           {/* Admissions Dropdown */}
+//           <div className="relative">
+//             <button 
+//               onClick={() => toggleDropdown('admissions')}
+//               className="hover:underline flex items-center"
+//             >
+//               Admissions <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+//               </svg>
+//             </button>
+            
+//             {openDropdown === 'admissions' && (
+//               <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50 animate-fade-in-up">
+//                 {dropdownItems.admissions.map((item, index) => (
+//                   <a 
+//                     key={index} 
+//                     href={item.href} 
+//                     className="block px-4 py-2 text-gray-800 hover:bg-blue-100 transition"
+//                   >
+//                     {item.name}
+//                   </a>
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+          
+//           <NavLink href="#contact" active={activeSection === "contact"}>Contact</NavLink>
+//           <Link href="/login" className="hover:underline bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold transition transform hover:scale-105">Login</Link>
+//         </div>
+//       </div>
+      
+//       {/* Mobile Navigation */}
+//       {isMenuOpen && (
+//         <div className="md:hidden mt-4 bg-blue-700 rounded-lg p-4 animate-fade-in-down">
+//           <div className="flex flex-col space-y-3">
+//             <MobileNavLink href="#hero" onClick={() => setIsMenuOpen(false)}>Home</MobileNavLink>
+            
+//             <div>
+//               <button 
+//                 onClick={() => toggleDropdown('about-mobile')}
+//                 className="w-full text-left py-2 px-4 rounded hover:bg-blue-600 transition flex justify-between items-center"
+//               >
+//                 About <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+//                 </svg>
+//               </button>
+              
+//               {openDropdown === 'about-mobile' && (
+//                 <div className="pl-6 mt-2 space-y-2 animate-fade-in">
+//                   {dropdownItems.about.map((item, index) => (
+//                     <a 
+//                       key={index} 
+//                       href={item.href} 
+//                       onClick={() => setIsMenuOpen(false)}
+//                       className="block py-2 text-blue-100 hover:text-white transition"
+//                     >
+//                       {item.name}
+//                     </a>
+//                   ))}
+//                 </div>
+//               )}
+//             </div>
+            
+//             <MobileNavLink href="#services" onClick={() => setIsMenuOpen(false)}>Services</MobileNavLink>
+//             <MobileNavLink href="#gallery" onClick={() => setIsMenuOpen(false)}>Gallery</MobileNavLink>
+//             <MobileNavLink href="#news" onClick={() => setIsMenuOpen(false)}>News</MobileNavLink>
+//             <MobileNavLink href="#contact" onClick={() => setIsMenuOpen(false)}>Contact</MobileNavLink>
+//             <Link href="/login" className="hover:underline bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold text-center transition">Login</Link>
+//           </div>
+//         </div>
+//       )}
+//     </nav>
+//   );
+// }
+
+// function NavLink({ href, active, children }) {
+//   return (
+//     <a 
+//       href={href} 
+//       className={`hover:underline transition ${active ? "font-bold underline" : ""}`}
+//     >
+//       {children}
+//     </a>
+//   );
+// }
+
+// function MobileNavLink({ href, onClick, children }) {
+//   return (
+//     <a 
+//       href={href} 
+//       onClick={onClick}
+//       className="py-2 px-4 rounded hover:bg-blue-600 transition"
+//     >
+//       {children}
+//     </a>
+//   );
+// }
+
+// function Footer() {
+//   return (
+//     <footer className="bg-gray-800 text-white py-12 px-4">
+//       <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8">
+//         <div>
+//           <h3 className="text-xl font-bold mb-4">Our School</h3>
+//           <p className="text-gray-400">
+//             Providing quality education since 1995. Empowering students to excel academically, socially, and personally.
+//           </p>
+//         </div>
+        
+//         <div>
+//           <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+//           <ul className="space-y-2">
+//             <li><a href="#hero" className="text-gray-400 hover:text-white transition">Home</a></li>
+//             <li><a href="#about" className="text-gray-400 hover:text-white transition">About</a></li>
+//             <li><a href="#services" className="text-gray-400 hover:text-white transition">Services</a></li>
+//             <li><a href="#gallery" className="text-gray-400 hover:text-white transition">Gallery</a></li>
+//           </ul>
+//         </div>
+        
+//         <div>
+//           <h3 className="text-xl font-bold mb-4">Resources</h3>
+//           <ul className="space-y-2">
+//             <li><a href="#" className="text-gray-400 hover:text-white transition">Academic Calendar</a></li>
+//             <li><a href="#" className="text-gray-400 hover:text-white transition">Student Portal</a></li>
+//             <li><a href="#" className="text-gray-400 hover:text-white transition">Parent Resources</a></li>
+//             <li><a href="#" className="text-gray-400 hover:text-white transition">Faculty Directory</a></li>
+//           </ul>
+//         </div>
+        
+//         <div>
+//           <h3 className="text-xl font-bold mb-4">Contact Info</h3>
+//           <address className="not-italic text-gray-400">
+//             <p>123 Education Street</p>
+//             <p>City, State 12345</p>
+//             <p className="mt-2">Phone: (123) 456-7890</p>
+//             <p>Email: info@ourschool.edu</p>
+//           </address>
+//         </div>
+//       </div>
+      
+//       <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-gray-700 text-center text-gray-400">
+//         <p>&copy; {new Date().getFullYear()} Our School. All rights reserved.</p>
+//       </div>
+//     </footer>
+//   );
+// }
+// app/page.js
